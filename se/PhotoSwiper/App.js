@@ -13,8 +13,8 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 export default class Kimera extends Component {
   constructor(props){
     super(props);
-    this.state = {counter:0, 
-                  rightFolder: [],
+    this.state = {counter:0, // Used for the total count of user inputs; Debug variable
+                  rightFolder: [], 
                   leftFolder: [],
                   sources: [
                     require('./TestPhotos/Photo02.jpg'), 
@@ -66,12 +66,14 @@ export default class Kimera extends Component {
                     require('./TestPhotos/Photo47.jpg'),
                     require('./TestPhotos/Photo48.jpg'),
                     require('./TestPhotos/Photo49.jpg'),
-                    require('./TestPhotos/Photo50.jpg')],
-                  myText:'Swipe me!',
-                  gestureName: 'none',
-                  backgroundColor: '#F4D03F',
-                  index: 0}
+                    require('./TestPhotos/Photo50.jpg')], // TODO: Remove and use Cameraroll instead!
+                  myText:'Swipe me!', // TODO: Refactor and remove
+                  gestureName: 'none', // TODO: Refactor and remove
+                  backgroundColor: '#F4D03F', 
+                  index: 0} // variable used to load pictures TODO: Check if this is needed!
   }
+//TODO: Do we need these functions like this? Seems a bit too much?
+
   onSwipeLeft(gestureState) {
     this.setState({myText: 'Your picture is in left folder'});
   }
@@ -112,13 +114,14 @@ onSwipe(gestureName, gestureState) {
 }
 
   render() {
+
     let counter = this.state.counter;  
 
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80
     };
-             
+         
     return (
       <View style= {{flex: 1, 
                      flexDirection: 'column'}}>
@@ -132,49 +135,71 @@ onSwipe(gestureName, gestureState) {
             style={{
               flex: 1,
               backgroundColor: this.state.backgroundColor
-            }}
-            >
-            <Image source={this.state.sources[this.state.index]} 
+            }}>
+
+          {/* Active Image */}
+          <Image source={this.state.sources[this.state.index]} 
                    style={style.photoStyle}
-                   resizeMode='contain'/>
-            <Text>
-              {this.state.myText}
-              </Text>
-            <Text> 
-              onSwipe callback received gesture: {this.state.gestureName}
-              </Text>
-            <View style= {{flex: 1, 
-                           flexDirection: 'row'}}>
+                   resizeMode='contain'
+                   />
+
+          <Text>
+            {this.state.myText}
+          </Text>
+
+          <Text> 
+            onSwipe callback received gesture: {this.state.gestureName}
+          </Text>{/*TODO: Remove this text*/}
+
+
+          <View style= {{flex: 1, 
+                        flexDirection: 'row'}}>
+
+            {/*** DEBUG VALUES ***/}
             <Text style={style.valueStyle}> 
-              {this.state.leftFolder.length}
-              </Text>
+                {this.state.leftFolder.length /* Left counter */}
+            </Text>
+
             <Text style={style.valueStyle}> 
-              {counter}
-              </Text>
+                {counter /* Process counter */}
+            </Text>
+
             <Text style={style.valueStyle}>
-              {this.state.rightFolder.length}
-              </Text>
-        </View>
-        <View style= {{flex: 1, 
-                       flexDirection: 'row',
-                       justifyContent: 'center',
-                       alignItems: 'center',
-                       marginLeft: 5,
-                       marginRight: 5,
-                       marginTop: 10}}>
+                {this.state.rightFolder.length /* Right counter */}
+            </Text>
+
+          </View>
+
+
+          <View style= {{flex: 1, 
+                         flexDirection: 'row',
+                         justifyContent: 'center',
+                         alignItems: 'center',
+                         marginLeft: 5,
+                         marginRight: 5,
+                         marginTop: 10}}>
+
+
+            {/*** INPUT BUTTONS ***/}
+            {/*FIXME: Button spacing */}
             <Button 
                 title="Left folder" 
                 onPress={() => {this.moveLeft(counter)}}      
-              />
+                />
+
             <Button 
                 title="Skip" 
                 onPress={() => {this.skip(counter)}}
-              />
+                />
+
             <Button 
                 title="Right folder" 
                 onPress={() => {this.moveRight(counter)}}  
-              />
-        </View>
+                />
+
+
+          </View>
+
         </GestureRecognizer>
 
    

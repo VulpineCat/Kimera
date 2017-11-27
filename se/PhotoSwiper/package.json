@@ -7,9 +7,11 @@
 		"test": "jest"
 	},
 	"dependencies": {
+		"node": "^9.2.0",
 		"react": "16.0.0",
 		"react-native": "0.50.3",
-		"react-native-swipe-gestures": "^1.0.2"
+		"react-native-swipe-gestures": "^1.0.2",
+		"watchman": "^0.1.8"
 	},
 	"devDependencies": {
 		"babel-jest": "21.2.0",
