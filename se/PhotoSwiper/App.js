@@ -69,32 +69,26 @@ export default class Kimera extends Component {
                     require('./TestPhotos/Photo50.jpg')], // TODO: Remove and use Cameraroll instead!
                   myText:'Swipe me!', // TODO: Refactor and remove
                   gestureName: 'none', // TODO: Refactor and remove
-                  backgroundColor: '#F4D03F', 
+                  backgroundColor: '#EDEDED', 
                   index: 0} // variable used to load pictures TODO: Check if this is needed!
   }
 //TODO: Do we need these functions like this? Seems a bit too much?
 
-  onSwipeLeft(gestureState) {
-    this.setState({myText: 'Your picture is in left folder'});
-  }
-  moveLeft (counter) {
-    this.setState({counter: counter+1})
+
+  moveLeft () {
+    this.setState({counter: this.state.counter+1})
     this.setState({leftFolder: this.state.leftFolder.concat(this.state.sources[this.state.index])})
     this.state.sources.splice(this.state.index, 1)    
   }
-  onSwipeRight(gestureState) {
-    this.setState({myText: 'Your picture is in right folder'});
-  }
-  moveRight (counter) {
-    this.setState({counter: counter+1}) 
+
+  moveRight () {
+    this.setState({counter: this.state.counter+1}) 
     this.setState({rightFolder: this.state.rightFolder.concat(this.state.sources[this.state.index])})
     this.state.sources.splice(this.state.index, 1)
   }
-  onSwipeDown(gestureState) {
-    this.setState({myText: 'Your picture will stay in the original folder'});
-  }
-  skip (counter) {
-    this.setState({counter: counter+1, index: (this.state.index + 1) % this.state.sources.length})
+
+  skip () {
+    this.setState({counter: this.state.counter+1, index: (this.state.index + 1) % this.state.sources.length})
   }
 
 onSwipe(gestureName, gestureState) {
@@ -102,21 +96,18 @@ onSwipe(gestureName, gestureState) {
   this.setState({gestureName: gestureName});
   switch (gestureName) {
     case SWIPE_LEFT:
-      this.setState({backgroundColor: '#E1FFE1'});
+      this.moveLeft()
       break;
     case SWIPE_DOWN:
-      this.setState({backgroundColor: '#E1E9FF'});
+      this.skip()
       break;
     case SWIPE_RIGHT:
-      this.setState({backgroundColor: '#FFF0E1'});
+      this.moveRight()
       break;
   }
 }
 
   render() {
-
-    let counter = this.state.counter;  
-
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80
@@ -128,9 +119,6 @@ onSwipe(gestureName, gestureState) {
 
         <GestureRecognizer
             onSwipe={(direction, state) => this.onSwipe(direction, state)}
-            onSwipeLeft={(state) => this.moveLeft(counter)}
-            onSwipeDown={(state) => this.skip(counter)}
-            onSwipeRight={(state) => this.moveRight(counter)}
             config={config}
             style={{
               flex: 1,
@@ -161,7 +149,7 @@ onSwipe(gestureName, gestureState) {
             </Text>
 
             <Text style={style.valueStyle}> 
-                {counter /* Process counter */}
+                {this.state.counter /* Process counter */}
             </Text>
 
             <Text style={style.valueStyle}>
