@@ -172,17 +172,17 @@ onSwipe(gestureName, gestureState) {
             {/*FIXME: Button spacing */}
             <Button 
                 title="Left folder" 
-                onPress={() => {this.moveLeft(counter)}}      
+                onPress={() => {this.moveLeft()}}      
                 />
 
             <Button 
                 title="Skip" 
-                onPress={() => {this.skip(counter)}}
+                onPress={() => {this.skip()}}
                 />
 
             <Button 
                 title="Right folder" 
-                onPress={() => {this.moveRight(counter)}}  
+                onPress={() => {this.moveRight()}}  
                 />
 
 
